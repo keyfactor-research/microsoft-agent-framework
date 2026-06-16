@@ -56,7 +56,8 @@ prerelease = "if-necessary-or-explicit"
 constraint-dependencies = ["litellm>=1.83.7", "fastapi-sso>=0.19.0"]
 # Allow opentelemetry-semantic-conventions 0.61b0 for mistralai compatibility
 # (mistralai pins <0.61 but 0.61b0 is compatible at runtime).
-override-dependencies = ["mcp[ws]>=1.27.0", "uvicorn[standard]>=0.34.0", "opentelemetry-semantic-conventions>=0.60b1"]
+# cryptography >= 49.0 is needed for pqc operations. litellm pins cryptography to a lower version that does not have pqc operations.
+override-dependencies = ["mcp[ws]>=1.27.0", "uvicorn[standard]>=0.34.0", "opentelemetry-semantic-conventions>=0.60b1", "cryptography>=49.0"]
 environments = [
     "sys_platform == 'darwin'",
     "sys_platform == 'linux'",
@@ -95,6 +96,7 @@ agent-framework-monty = { workspace = true }
 agent-framework-ollama = { workspace = true }
 agent-framework-openai = { workspace = true }
 agent-framework-orchestrations = { workspace = true }
+agent-framework-prompt-signing = { workspace = true }
 agent-framework-purview = { workspace = true }
 agent-framework-redis = { workspace = true }
 agent-framework-azure-contentunderstanding = { workspace = true }
@@ -217,6 +219,7 @@ executionEnvironments = [
     { root = "packages/mistral/tests", reportPrivateUsage = "none" },
     { root = "packages/ollama/tests", reportPrivateUsage = "none" },
     { root = "packages/orchestrations/tests", reportPrivateUsage = "none" },
+    { root = "packages/prompt-signing/tests", reportPrivateUsage = "none" },
     { root = "packages/purview/tests", reportPrivateUsage = "none" },
     { root = "packages/redis/tests", reportPrivateUsage = "none" },
     { root = "tests", reportPrivateUsage = "none" },
